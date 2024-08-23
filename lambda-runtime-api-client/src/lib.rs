@@ -74,7 +74,9 @@ impl Client {
             (scheme, authority, base_path)
         };
         let path = parts.uri.path_and_query().expect("PathAndQuery not found");
-        let pq: PathAndQuery = format!("{base_path}{path}").parse().expect("PathAndQuery invalid");
+        let pq: PathAndQuery = format!("{base_path}{}", path.to_string().replace("/2018-06-01", ""))
+            .parse()
+            .expect("PathAndQuery invalid");
 
         let uri = Uri::builder()
             .scheme(scheme.as_ref())
